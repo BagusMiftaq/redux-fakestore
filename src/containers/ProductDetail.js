@@ -3,28 +3,19 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
-  selectedProduct,
   removeSelectedProduct,
+  fetchProduct,
 } from "../redux/actions/productAction";
 
 const ProductDetail = () => {
   const product = useSelector((state) => state.product);
   const { productId } = useParams();
-  const { id, title, image, price } = product;
+  const { title, image, price, description } = product;
   const dispatch = useDispatch();
   console.log(product);
 
-  const fetchProductDetail = async () => {
-    const response = await axios
-      .get(`https://fakestoreapi.com/products/${productId}`)
-      .catch((err) => {
-        console.log("Err", err);
-      });
-    dispatch(selectedProduct(response.data));
-  };
-
   useEffect(() => {
-    if (productId && productId !== "") fetchProductDetail();
+    if (productId && productId !== "") dispatch(fetchProduct(productId));
     return () => {
       dispatch(removeSelectedProduct());
     };
@@ -52,6 +43,7 @@ const ProductDetail = () => {
             <p className="mb-3 font-bold text-green-800 dark:text-white">
               $ {price}
             </p>
+            <p className="mb-3 text-black dark:text-white">{description}</p>
           </div>
         </div>
       )}

@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 const ProductComponent = () => {
   const products = useSelector((state) => state.allProduct.products);
-  const renderList = products.map((product) => {
-    const { id, title, image, price, category } = product;
+  const renderList = products.map((product, index) => {
+    const { id, title, image, price } = product;
     return (
-      <Link to={`/products/${id}`}>
+      <Link key={index} to={`/products/${id}`}>
         <div className="max-w-sm bg-white border border-gray-200 rounded-lg drop-shadow-md dark:bg-gray-800 dark:border-gray-700 mx-2 my-2">
           <div className="flex flex-column flex-wrap justify-evenly">
             <img
